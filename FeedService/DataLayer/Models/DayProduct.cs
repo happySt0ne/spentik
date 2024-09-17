@@ -8,7 +8,10 @@ namespace FeedService.DataLayer.Models {
 		public int DayId { get; set; }
 		public int ProductId { get; set; }
 
+		[JsonIgnore]
 		public virtual Day Day { get; set; } = null!;
+
+		[JsonIgnore]
 		public virtual Product Product { get; set; } = null!;
 	}
 }
