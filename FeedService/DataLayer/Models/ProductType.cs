@@ -11,9 +11,5 @@ namespace FeedService.DataLayer.Models
 
 		[JsonIgnore]
 		public virtual ICollection<Product>? Products { get; set; }
-
-		public ProductType(string name) {
-			Name = name;
-		}
 	}
 }

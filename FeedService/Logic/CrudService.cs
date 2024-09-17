@@ -7,7 +7,7 @@ namespace FeedService.Logic
 {
     public class CrudService<T, TDto> : ICrudService<T, TDto>
 			where T : class, ITable
-			where TDto : IDto {
+			where TDto : IDto<T, TDto> {
 		private FinlahContext _context;
 
 		public CrudService(FinlahContext context) {
@@ -39,7 +39,9 @@ namespace FeedService.Logic
 
 			if (itemToUpdate is null) return;
 
-			_context.Entry<T>(itemToUpdate).CurrentValues.SetValues(changes);
+			T newItem = itemToUpdate + changes;
+
+			_context.Entry<T>(itemToUpdate).CurrentValues.SetValues(newItem);
 			_context.SaveChanges();
 		}
 	}

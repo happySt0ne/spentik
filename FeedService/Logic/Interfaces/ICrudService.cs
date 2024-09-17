@@ -4,7 +4,7 @@ namespace FeedService.Logic.interfaces
 {
     public interface ICrudService<T, TDto> 
 			where T: ITable
-			where TDto: IDto {
+			where TDto: IDto<T, TDto> {
 		public T? Get(int id);
 		public ICollection<T>? Get();
 		public void Create(T item);
