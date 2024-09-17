@@ -1,16 +1,16 @@
 using FeedService.DataLayer;
-using Microsoft.AspNetCore.Builder;
+using FeedService.DataLayer.Interfaces;
+using FeedService.Logic;
+using FeedService.Logic.interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 builder.Services.AddDbContext<FinlahContext>(
 	options => options.UseSqlServer(
 		"Server=localhost;Database=Finlah;Trusted_Connection=True;TrustServerCertificate=True"));
+
+builder.Services.AddScoped(typeof(ICrudService<,>), typeof(CrudService<,>));
 
 builder.Services.AddControllers();
 

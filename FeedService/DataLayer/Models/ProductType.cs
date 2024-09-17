@@ -1,9 +1,16 @@
-﻿namespace FeedService.DataLayer.Models {
-	public class ProductType {
+﻿using FeedService.DataLayer.Interfaces;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Text.Json.Serialization;
+
+namespace FeedService.DataLayer.Models
+{
+    public class ProductType : ITable {
+		[JsonIgnore]
 		public int Id { get; set; }
 		public string Name { get; set; }
 
-		public virtual ICollection<Product> Products { get; set; }
+		[JsonIgnore]
+		public virtual ICollection<Product>? Products { get; set; }
 
 		public ProductType(string name) {
 			Name = name;
