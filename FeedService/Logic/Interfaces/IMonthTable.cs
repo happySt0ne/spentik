@@ -1,5 +1,5 @@
 ﻿namespace FeedService.Logic.Interfaces {
 	public interface IMonthTableService {
-		public Table GetTable(int year, MonthName month);
+		public MountTable GetTable(int year, MonthName month);
 	}
 }

@@ -1,7 +1,7 @@
 using FeedService.DataLayer;
 using FeedService.DataLayer.Interfaces;
-using FeedService.Logic;
 using FeedService.Logic.interfaces;
+using FeedService.Logic.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -3,9 +3,8 @@ using FeedService.DataLayer.Interfaces;
 using FeedService.Logic.interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace FeedService.Logic
-{
-    public class CrudService<T, TDto> : ICrudService<T, TDto>
+namespace FeedService.Logic.Services {
+	public class CrudService<T, TDto> : ICrudService<T, TDto>
 			where T : class, ITable
 			where TDto : IDto<T, TDto> {
 		private FinlahContext _context;
@@ -41,7 +40,7 @@ namespace FeedService.Logic
 
 			T newItem = itemToUpdate + changes;
 
-			_context.Entry<T>(itemToUpdate).CurrentValues.SetValues(newItem);
+			_context.Entry(itemToUpdate).CurrentValues.SetValues(newItem);
 			_context.SaveChanges();
 		}
 	}
