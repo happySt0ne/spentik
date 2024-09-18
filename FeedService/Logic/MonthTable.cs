@@ -1,11 +1,11 @@
 ﻿namespace FeedService.Logic {
 
-	public class MountTable {
+	public class MonthTable {
 		public List<DateOnly> Dates { get; init; } = new();
 
 		public Dictionary<string, List<int>> Sums;
 
-		public MountTable(MonthName monthName, int year, Dictionary<string, List<int>> sums) {
+		public MonthTable(MonthName monthName, int year, Dictionary<string, List<int>> sums) {
 			for (int i = 1; i <= Months.GetMonthLength(monthName); ++i) {
 
 				DateOnly date = new(year, (int)monthName, i);
