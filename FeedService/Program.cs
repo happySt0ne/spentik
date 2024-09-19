@@ -1,6 +1,7 @@
 using FeedService.DataLayer;
 using FeedService.DataLayer.Interfaces;
 using FeedService.Logic.interfaces;
+using FeedService.Logic.Interfaces;
 using FeedService.Logic.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,8 @@ builder.Services.AddDbContext<FinlahContext>(
 		"Server=localhost;Database=Finlah;Trusted_Connection=True;TrustServerCertificate=True"));
 
 builder.Services.AddScoped(typeof(ICrudService<,>), typeof(CrudService<,>));
+
+builder.Services.AddScoped(typeof(ISearchService), typeof(SearchService));
 
 builder.Services.AddControllers();
 
