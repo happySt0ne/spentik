@@ -22,14 +22,14 @@ public class MonthTableService : IMonthTableService {
 		HashSet<string> productTypeNames = GetProductTypeNames(dayProducts);
 
 		foreach (var productTypeName in productTypeNames) {
-			var s = dayProducts
+			var sumsList = dayProducts
 				.Where(dp => dp.Product.ProductType?.Name == productTypeName)
 				.GroupBy(dp => dp.Day.Date)
 				.OrderBy(g => g.Key)
 				.Select(g => g.Sum(dp => dp.Product.Cost))
 				.ToList();
 
-			sums.Add(productTypeName, s);
+			sums.Add(productTypeName, sumsList);
 		}
 
 		return new MonthTable(month, year, sums);
