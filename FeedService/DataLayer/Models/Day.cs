@@ -8,6 +8,7 @@ namespace FeedService.DataLayer.Models {
 		public int Id { get; set; }
 		public DateOnly Date { get; set; }
 
-		public virtual ICollection<DayProduct> DayProducts { get; set; } = null!;
+		[JsonIgnore]
+		public virtual ICollection<DayProduct>? DayProducts { get; set; } = null!;
 	}
 }
