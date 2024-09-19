@@ -13,6 +13,8 @@ builder.Services.AddDbContext<FinlahContext>(
 
 builder.Services.AddScoped(typeof(ICrudService<,>), typeof(CrudService<,>));
 
+builder.Services.AddScoped(typeof(IMonthTableService), typeof(MonthTableService));
+
 builder.Services.AddScoped(typeof(ISearchService), typeof(SearchService));
 
 builder.Services.AddControllers();
