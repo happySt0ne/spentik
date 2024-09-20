@@ -4,36 +4,25 @@ using FeedService.Logic.interfaces;
 using FeedService.Logic.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
+using CostsList = System.Collections.Generic.List<double>;
+
 namespace FeedService.Logic.Services;
 
 public class MonthTableService : IMonthTableService {
-	private ICrudService<DayProduct, DayProductDto> _dayProductCrud;
 	private ISearchService _searchService;
 
-	public MonthTableService(ICrudService<DayProduct, DayProductDto> crudService, ISearchService searchService) {
-		_dayProductCrud = crudService;
+	public MonthTableService(ISearchService searchService) {
 		_searchService = searchService;
 	}
 
 	public MonthTable GetTable(int year, MonthName month) {
-		Dictionary<string, List<double>> sums = new(Months.GetMonthLength(month));
-
 		List<DayProduct> dayProducts = GetDayProducts(year, month);
 		HashSet<string> productTypeNames = GetProductTypeNames(dayProducts);
-
-		foreach (var productTypeName in productTypeNames) {
-			var sumsList = dayProducts
-				.Where(dp => dp.Product.ProductType?.Name == productTypeName)
-				.GroupBy(dp => dp.Day.Date)
-				.OrderBy(g => g.Key)
-				.Select(g => g.Sum(dp => dp.Product.Cost))
-				.ToList();
-
-			sums.Add(productTypeName, sumsList);
-		}
+		Dictionary<string, CostsList> sums = GetSums(dayProducts, productTypeNames, month);
 
 		return new MonthTable(month, year, sums);
 	}
+
 	private List<DayProduct> GetDayProducts(int year, MonthName month) {
 		return _searchService
 			.GetList<DayProduct>(dp =>
@@ -50,6 +39,31 @@ public class MonthTableService : IMonthTableService {
 			if (productTypeName is null) continue;
 
 			result.Add(productTypeName);
+		}
+
+		return result;
+	}
+
+	private Dictionary<string, CostsList> GetSums(
+			List<DayProduct> dayProducts, 
+			HashSet<string> productTypeNames, 
+			MonthName month) {
+		int monthLength = Months.GetMonthLength(month);
+		Dictionary<string, CostsList> result = new(monthLength);
+
+		foreach (var productTypeName in productTypeNames) {
+			var daySums = dayProducts
+				.Where(dp => dp.Product.ProductType?.Name == productTypeName)
+				.GroupBy(dp => dp.Day.Date)
+				.OrderBy(g => g.Key)
+				.Select(g => new { DayNumber = g.Key.Day, Sum = g.Sum(dp => dp.Product.Cost) })
+				.ToDictionary(item => item.DayNumber, item => item.Sum);
+
+			var costsColumn = Enumerable.Range(1, monthLength)
+				.Select(dayNumber => daySums.TryGetValue(dayNumber, out var sum) ? sum : 0)
+				.ToList();
+
+			result.Add(productTypeName, costsColumn);
 		}
 
 		return result;
