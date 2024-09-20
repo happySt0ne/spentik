@@ -13,8 +13,10 @@ namespace FeedService.Logic.Services {
 			_context = context;
 		}
 
-		public virtual void Create(T item) {
-			_context.Set<T>().Add(item);
+		public virtual void Create(TDto item) {
+			T tItem = item.CreateFromDto();
+
+			_context.Set<T>().Add(tItem);
 			_context.SaveChanges();
 		}
 

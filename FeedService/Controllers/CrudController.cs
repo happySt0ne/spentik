@@ -25,7 +25,7 @@ namespace FeedService.Controllers {
 		}
 
 		[HttpPost]
-		public virtual IActionResult Post(T item) {
+		public virtual IActionResult Post(dtoT item) {
 			_crudService.Create(item);
 			return Ok(item);
 		}

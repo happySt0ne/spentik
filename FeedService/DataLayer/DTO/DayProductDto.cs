@@ -6,6 +6,19 @@ namespace FeedService.DataLayer.DTO {
 		public int? DayId { get; set; }
 		public int? ProductId { get; set; }
 
+		public DayProduct CreateFromDto() {
+			if (DayId == null || ProductId is null) {
+				throw new ArgumentNullException("Can't create dayProduct bcz of null fields");
+			}
+
+			DayProduct dayProduct = new() {
+				DayId = DayId.Value,
+				ProductId = ProductId.Value
+			};
+
+			return dayProduct;
+		}
+
 		public static DayProduct operator +(DayProduct baseType, DayProductDto dtoType) {
 			DayProduct result = new();
 
