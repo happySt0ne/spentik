@@ -2,10 +2,8 @@
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Text.Json.Serialization;
 
-namespace FeedService.DataLayer.Models
-{
-    public class ProductType : ITable {
-		[JsonIgnore]
+namespace FeedService.DataLayer.Models {
+	public class ProductType : ITable {
 		public int Id { get; set; }
 		public string Name { get; set; }
 
