@@ -12,7 +12,7 @@ namespace FeedService.Controllers {
 			_monthTableService = monthTableService;
 		}
 
-		[HttpGet]
+		[HttpGet("{date}")]
 		public IActionResult Get(DateOnly date) {
 			return Ok(_monthTableService.GetTable(date.Year, date.Month));
 		}
