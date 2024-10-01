@@ -1,0 +1,15 @@
+nav {
+  display: inline-flex;
+  flex-wrap: wrap; 
+
+  min-width: 100%;
+
+  gap: 5%;
+
+  justify-content: center;
+}
+
+nav > * {
+  margin-right: 10px;
+  margin-bottom: 10px;
+} 

@@ -1,7 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import Table from './Table';
-import {useEffect} from 'react';
+import { useEffect } from 'react';
+import Navigation from './Navigation';
 
 function App() {
   useEffect(() => {
@@ -9,7 +9,10 @@ function App() {
   }, []);
 
   return(
-    <Table />
+    <div>
+      <Navigation />
+      <Table />
+    </div>
   );
 }
 
