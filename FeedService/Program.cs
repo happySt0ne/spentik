@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<FinlahContext>(
 	options => options.UseSqlServer(
-		  "Server=localhost,1433;Database=Finlah;User=sa;Password=AnalKarnaval228$;TrustServerCertificate=True"));
+		  "Server=db,1433;Database=Finlah;User=sa;Password=AnalKarnaval228$;TrustServerCertificate=True"));
 
 builder.Services.AddScoped(typeof(ICrudService<,>), typeof(CrudService<,>));
 
