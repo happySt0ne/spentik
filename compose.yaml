@@ -1,12 +1,19 @@
+networks:
+  backNet:
+
 services: 
   app:
     build: 
-      context: ./FeedService/
-      target: final
+      context: ./FeedService
     ports: 
-      - "8080:80"
+      - 8080:80
     depends_on:
       - db
+    networks:
+      - backNet
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80'
     
   db: 
     image: mcr.microsoft.com/mssql/server
@@ -15,3 +22,7 @@ services:
     environment:
       SA_PASSWORD: "AnalKarnaval228$"
       ACCEPT_EULA: "Y"
+    networks:
+      - backNet
+    volumes:
+      - "./data-mssql:/var/opt/mssql/data"
