@@ -14,11 +14,13 @@ var horizontalPadding = getComputedStyle(root)
   .getPropertyValue('--table-horizontal-padding');
 var paddingValue = parseInt(horizontalPadding, 10);
 
+const apiUrl = process.env.REACT_APP_BACKEND_URL;
+
 export default function Table() {
   const [data, setData] = useState();
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/Table/${TODAY}`)
+    fetch(`${apiUrl}/api/Table/${TODAY}`)
     .then(response => response.json()) 
     .then(data => setData(data))
     .catch(error => console.error(error));

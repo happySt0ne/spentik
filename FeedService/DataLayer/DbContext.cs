@@ -15,9 +15,17 @@ namespace FeedService.DataLayer {
 		public DbSet<DayProduct> DayProduct { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+			var dbUserName = Environment.GetEnvironmentVariable("DB_USER");
+			var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
+			var dbName = Environment.GetEnvironmentVariable("DB_NAME");
+		
+			string connectionString = $"Server=db,1433;Database={dbName};User={dbUserName};"
+				+ $"Password={dbPassword}$;TrustServerCertificate=True";
+			
+			optionsBuilder.UseSqlServer(connectionString);
+
 			base.OnConfiguring(optionsBuilder);
-			optionsBuilder
-				.UseLazyLoadingProxies();
+			optionsBuilder.UseLazyLoadingProxies();
 		}
 	}
 }
