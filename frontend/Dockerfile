@@ -1,12 +1,24 @@
-FROM node:alpine
+FROM node:14.21.1-alpine
 
-WORKDIR /usr/app
+#create a working directory inside the container.
+WORKDIR /app
 
-COPY package.json .
-RUN npm install
+#Environment variables.
+ENV PATH /app/node_modules/.bin:$PATH
 
-RUN mkdir node_modules/.cache && chmod -R 777 node_modules/.cache
+#copy the files from the host to the container.
+COPY package.json ./
+COPY package-lock.json ./
 
-COPY . .
+#install npm and react versions.
+RUN npm install 
+RUN npm install react-scripts@5.0.1 -g --silent
+RUN npm install -g nodemon
 
-CMD ["npm", "run", "start"]
+#install nodemon to provide hot-reloading functionality.
+# RUN npm install nodemon --save-dev
+COPY . ./
+
+#use nodemon to run the react application using npm.
+# CMD ["nodemon", "--exec", "npm", "start"]
+CMD ["nodemon", "server.js"]
