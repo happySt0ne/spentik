@@ -42,6 +42,7 @@
     ]
   },
   "nodemonConfig": {
-    "ext": "js, json, css, html, jsx"
+    "ext": "js, json, css, html, jsx",
+    "ignore": ["node_modules"]
   }
 }
