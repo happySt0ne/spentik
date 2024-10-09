@@ -9,11 +9,6 @@ const day = String(todate.getDate()).padStart(2, '0');
 
 const TODAY = `${year}-${month}-${day}`;
 
-const root = document.documentElement;
-var horizontalPadding = getComputedStyle(root)
-  .getPropertyValue('--table-horizontal-padding');
-var paddingValue = parseInt(horizontalPadding, 10);
-
 // const apiUrl = process.env.REACT_APP_BACKEND_URL;
 
 export default function Table() {
@@ -26,44 +21,38 @@ export default function Table() {
     .catch(error => console.error(error));
   }, []);
 
-  const columnsCount = data && Object.keys(data.sums).length + 10;
-  // TODO: Тут нужно будет немного переделать формулу.
-
-  root.style.setProperty(
-    '--table-horizontal-padding', 
-    `${paddingValue / columnsCount}px`
-  );
-
   return (
-    <div className='Table'>
-      { data && (GetDatesColumn(data.dates)) }
-      { data && (GetColumns(data)) }
+    <div className="Table">
+      {data && (data.dates[0].slice(0, 7))}
+      {data && (GetDatesColumn(data.dates))}
+      {data && (GetDataColumns(data))}
     </div>
   )
 }
 
 function GetDatesColumn(dates) {
   return (
-    <Column 
+    <Column
       key={dates}
       columnName='Дата'
-      columnData={dates}
+      columnData={dates.map(str => str.slice(-2))}
     />
   );
 }
 
-function GetColumns(data) {
+function GetDataColumns(data) {
   const sumsKeys = Object.keys(data.sums);
 
   return (
-    <div className='column-list'> 
-      {data.sums && sumsKeys.map(key => 
-        <Column 
+    <>
+      {data.sums && sumsKeys.map(key =>
+        <Column
           key={key}
-          columnName={key} 
-          columnData={data.sums[key]} 
-        /> 
+          columnName={key}
+          columnData={data.sums[key]}
+        />
       )}
-    </div>
+    </>
   );
 }
+

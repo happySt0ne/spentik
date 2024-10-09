@@ -8,7 +8,7 @@ import {
 
 export default function Navigation() {
   return (
-    <Container className='position-fixed top-0 start-0 w-auto'>
+    <Container fluid>
       <Navbar expand={false}>
         <Navbar.Toggle> <FcMenu /> </Navbar.Toggle>
     
