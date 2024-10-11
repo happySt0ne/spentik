@@ -8,19 +8,27 @@ import {
 } from 'react-bootstrap';
 
 export default function Navigation() {
-  const [showModal, setShowModal] = useState(false);
+  const [showAddPurchaseModal, setAddPurchaseModal] = useState(false);
+  const [showAddProductModal, setAddProductModal] = useState(false);
 
-  const handleModal = () => setShowModal(!showModal);
+  const handleAddPurchaseModal = () => setAddPurchaseModal(!showAddPurchaseModal);
+  const handleAddProductModal = () => setAddProductModal(!showAddProductModal);
+
+  const menuHandlers = {
+    "Purchase": handleAddPurchaseModal,
+    "Product": handleAddProductModal,
+  }
 
   return (
     <>
-      { CreateMenu(handleModal) }
-      { CreateModal(showModal, handleModal) }
+      { CreateMenu(menuHandlers) }
+      { AddPurchaseModal(showAddPurchaseModal, menuHandlers) }
+      { AddProductModal(showAddProductModal, handleAddProductModal) }
     </>
   )
 }
 
-function CreateMenu(handleModal) {
+function CreateMenu(menuHandlers) {
   return (
     <Container fluid>
       <Navbar expand={false}>
@@ -33,8 +41,14 @@ function CreateMenu(handleModal) {
 
           <Offcanvas.Body>
             <Nav className="justify-content-end flex-grow-1 pe-3">
-              <Button onClick={handleModal} className="mb-2">Добавить покупку</Button>
-              <Button onClick={handleModal} className="mb-2">Добавить продукт</Button>
+              <Button 
+                variant="outline-dark" 
+                onClick={menuHandlers["Purchase"]} 
+                className="mb-2">Добавить покупку</Button>
+              <Button 
+                variant="outline-dark" 
+                onClick={menuHandlers["Product"]} 
+                className="mb-2">Добавить продукт</Button>
             </Nav>
           </Offcanvas.Body>
 
@@ -44,33 +58,73 @@ function CreateMenu(handleModal) {
   )
 }
 
-function CreateModal(showModal, handleModal) {
+function AddProductModal(showAddPurchaseModal, handleAddProductModal) {
   return (
-    <Modal show={showModal} onHide={handleModal}>
+    <Modal show={showAddPurchaseModal} onHide={handleAddProductModal}>
       <Modal.Header closeButton>
-        <Modal.Title>Моя форма</Modal.Title>
+        <Modal.Title>Add product</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        { CreateForm() }
+        { AddProductForm() }
       </Modal.Body>
     </Modal>
   )
 }
 
-function CreateForm() {
+function AddProductForm() {
   return (
     <Form>
-      <Form.Group controlId="formBasicEmail">
-        <Form.Label>Email адрес</Form.Label>
-        <Form.Control type="email" placeholder="Введите email" />
+      <Form.Group>
+        <Form.Label>Название zxcv</Form.Label><br />
+        <Form.Control type="text" /><br />
+        
         <Form.Label>Дата</Form.Label><br />
-        <Form.Label>Название продукта</Form.Label><br />
-        <Form.Label>Тип продукта</Form.Label><br />
+        <Form.Control type="date" placeholder="sas"/>
+        <Form.Text className="text-muted">
+          Если оставить это поле пустым, то будет вставлена нынешняя дата.
+        </Form.Text><br />
       </Form.Group>
 
-      <div className="text-center">
-        <Button variant="primary" type="submit">
+      <div className="text-center mt-4">
+        <Button variant="outline-dark" type="submit">
           Отправить
+        </Button>
+      </div>
+    </Form>
+  )
+}
+
+function AddPurchaseModal(showAddPurchaseModal, handlers) {
+  return (
+    <Modal show={showAddPurchaseModal} onHide={handlers["Purchase"]}>
+      <Modal.Header closeButton>
+        <Modal.Title>Моя форма</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        { AddPurchaseForm(handlers) }
+      </Modal.Body>
+    </Modal>
+  )
+}
+
+function AddPurchaseForm(handlers) {
+  return (
+    <Form>
+        <Form.Label>Название продукта</Form.Label><br />
+        <Form.Control type="text" /><br />
+        
+        <Form.Label>Дата</Form.Label><br />
+        <Form.Control type="date" placeholder="sas"/>
+        <Form.Text muted>
+          Если оставить это поле пустым, то будет вставлена нынешняя дата.
+        </Form.Text><br />
+
+      <div className="text-center mt-4">
+        <Button variant="outline-dark" type="submit">
+          Отправить
+        </Button>{' '}
+        <Button variant="outline-dark" onClick={handlers["Product"]}>
+          Добавить продукт
         </Button>
       </div>
     </Form>
