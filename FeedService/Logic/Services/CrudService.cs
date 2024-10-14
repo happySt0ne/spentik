@@ -25,6 +25,7 @@ namespace FeedService.Logic.Services {
 			if (itemToRemove is null) return;
 
 			_context.Set<T>().Remove(itemToRemove);
+			_context.SaveChanges();
 		}
 
 		public T? Get(int id) {

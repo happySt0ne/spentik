@@ -30,7 +30,7 @@ namespace FeedService.Controllers {
 			return Ok(item);
 		}
 
-		[HttpDelete]
+		[HttpDelete("{id}")]
 		public virtual IActionResult Delete(int id) {
 			_crudService.Delete(id);
 			return Ok();
